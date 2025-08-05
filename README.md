@@ -1,34 +1,61 @@
-# libxml2-race-condition
-Race condition in libxml2 readlink() handling of external entities
-
 # libxml2 Race Condition Vulnerability (XXE via readlink)
 
-This repository documents a race condition vulnerability discovered in libxml2 prior to version 2.12.7.
+This repository documents a **race condition vulnerability** in `libxml2` (prior to version 2.12.7) that can lead to **information disclosure** through unsafe handling of external XML entities.
 
-## Summary
+---
 
-libxml2's handling of external XML entities via `file://` URLs is vulnerable to a race condition involving symlinks. An attacker can switch the target of a symlink between a decoy and a sensitive file during XML parsing, leading to unintended disclosure of sensitive data.
+## 📌 Summary
 
-## Impacted Tools
+A race condition exists in libxml2’s `readlink()` handling when resolving `file://` external entities. By rapidly switching a symbolic link’s target between a decoy and a sensitive file during XML parsing, an attacker can trick libxml2-based tools into unintentionally exposing sensitive data.
 
-- xmllint
-- xsltproc
-- Python-lxml
+---
 
-## Impact
+## 🧪 Affected Tools and Libraries
 
-- Information Disclosure
-- Potential Local Privilege Escalation (depending on usage context)
+- `xmllint`
+- `xsltproc`
+- Python’s `lxml` library (which uses libxml2 under the hood)
 
-## Status
+Tested and confirmed on:
 
-- Vulnerability confirmed and tested on Debian/Kali Linux
-- Awaiting CVE assignment
+- Debian-based systems (Debian, Kali Linux)
+- libxml2 < 2.12.7
 
-> A public PoC will be published here upon CVE assignment.
+---
 
-## Discoverer
+## 🛡️ Impact
 
-Guiar Oqba (techokba@gmail.com)
+- **Information Disclosure**: Sensitive files may be read via crafted XML + symlink timing.
+- **Potential Local Privilege Escalation**: If a privileged process parses untrusted XML, this may lead to privilege abuse.
 
+---
+
+## ⚙️ Technical Details
+
+- Vulnerability Type: Race Condition, XXE (XML External Entity)
+- Affected Functionality: `readlink()` usage in external entity resolution
+- Attack Vector: Local attacker crafts XML with external entity → links to symlink → rapidly swaps symlink target during parsing.
+
+---
+
+## 📅 Status
+
+- ✅ Vulnerability confirmed and reproducible
+- ⏳ CVE ID requested (pending assignment)
+- 🔐 Public PoC will be released after CVE is issued
+
+---
+
+## 🧑‍💻 Discoverer
+
+**Guiar Oqba**  
+<techokba@gmail.com>
+
+---
+
+## 📂 Notes
+
+This repository will be updated with further technical details, full PoC code, and mitigation suggestions once the CVE process is completed.
+
+---
 
