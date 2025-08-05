@@ -42,7 +42,7 @@ Tested and confirmed on:
 
 - ✅ Vulnerability confirmed and reproducible
 - ⏳ CVE ID requested (pending assignment)
-- 🔐 Public PoC will be released after CVE is issued
+- 🔐 PoC will be published only after coordination with the GNOME security team and CVE assignment
 
 ---
 
