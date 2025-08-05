@@ -29,6 +29,6 @@ libxml2's handling of external XML entities via `file://` URLs is vulnerable to 
 
 ## Discoverer
 
-Guiar Oqba (@techokba)
+Guiar Oqba (techokba@gmail.com)
 
 
